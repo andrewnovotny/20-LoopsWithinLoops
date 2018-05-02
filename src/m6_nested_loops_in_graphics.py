@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Andrew Novotny.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -80,10 +80,37 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    original_x = circle.center.x
+    original_y = circle.center.y
+    radius = circle.radius
 
+    x = original_x
+    y = original_y
+
+    for k in range(r):
+        for j in range(3):
+            circle.attach_to(window)
+            fill = circle.fill_color
+            circle = circle.clone()
+            circle.fill_color = fill
+            circle.center.x += 2 * radius
+        window.render(0.1)
+        circle.center.y += 2 * radius
+        circle.center.x = original_x
+
+    for k in range(3):
+        for j in range(c + 3):
+            circle.attach_to(window)
+            fill = circle.fill_color
+            circle = circle.clone()
+            circle.fill_color = fill
+            circle.center.x += 2 * radius
+        window.render(0.1)
+        circle.center.y += 2 * radius
+        circle.center.x = original_x
 
 def run_test_draw_wall_on_right():
     """ Tests the    draw_wall_on_right    function. """
@@ -124,8 +151,29 @@ def draw_wall_on_right(rectangle, n, window):
     # TODO: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    original_x1 = rectangle.corner_1.x
+    original_y1 = rectangle.corner_1.y
+    original_x2 = rectangle.corner_2.x
+    original_y2 = rectangle.corner_2.y
 
 
+    x1 = original_x1
+    y1 = original_y1
+
+    x2 = original_x2
+    y2 = original_y2
+
+    for k in range(n):
+        for j in range(k + 1):
+            rectangle.attach_to(window)
+            rectangle = rectangle.clone()
+            rectangle.corner_1.x += -rectangle.get_width() * j
+            rectangle.corner_2.x += -rectangle.get_width() * j
+        window.render(0.1)
+        rectangle.corner_1.x = original_x1
+        rectangle.corner_2.x = original_x2
+        rectangle.corner_1.y += original_y1 + rectangle.get_height()
+        rectangle.corner_2.y += original_y2 + rectangle.get_height()
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------

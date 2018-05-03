@@ -151,29 +151,17 @@ def draw_wall_on_right(rectangle, n, window):
     # TODO: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
-    original_x1 = rectangle.corner_1.x
-    original_y1 = rectangle.corner_1.y
-    original_x2 = rectangle.corner_2.x
-    original_y2 = rectangle.corner_2.y
-
-
-    x1 = original_x1
-    y1 = original_y1
-
-    x2 = original_x2
-    y2 = original_y2
+    original_rect = rectangle.clone()
 
     for k in range(n):
         for j in range(k + 1):
             rectangle.attach_to(window)
             rectangle = rectangle.clone()
-            rectangle.corner_1.x += -rectangle.get_width() * j
-            rectangle.corner_2.x += -rectangle.get_width() * j
+            rectangle.move_by(-rectangle.get_width(), 0)
         window.render(0.1)
-        rectangle.corner_1.x = original_x1
-        rectangle.corner_2.x = original_x2
-        rectangle.corner_1.y += original_y1 + rectangle.get_height()
-        rectangle.corner_2.y += original_y2 + rectangle.get_height()
+        rectangle = original_rect
+        rectangle = rectangle.clone()
+        rectangle.move_by(0, rectangle.get_height() * (k + 1))
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
